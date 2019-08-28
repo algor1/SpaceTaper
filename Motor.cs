@@ -7,7 +7,7 @@ using System;
 
 public class Motor : MonoBehaviour
 {
-    public float Health{get;private set;}
+    public float Health{get;set;}
     public float Hit {get;set;}
 
     public void Damage(float hitPoints)
@@ -18,11 +18,16 @@ public class Motor : MonoBehaviour
             
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Delete();
+    }
 
     public void Delete()
     {
         EventHandler<DestroyedEventArgs> handler = Destroed;
         handler?.Invoke(this, new DestroyedEventArgs {HitPoints= Hit});
+        GetComponent<Indicator>().Delete();
         Destroy(gameObject);
     }
 

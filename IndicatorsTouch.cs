@@ -32,10 +32,12 @@ public class IndicatorsTouch : MonoBehaviour
 
                 for( int j=0 ; j<results.Count ; j++ )
                 {
-                    if (results[i].gameObject.TryGetComponent(typeof(IndicatorProperty), out Component c))
+                    if (results[i].gameObject.TryGetComponent(typeof(Motor), out Component c))
                     {
-                        var indicatorProperty = (IndicatorProperty)c;
-                        indicatorProperty.LinkedObject.GetComponent<Motor>().Damage(1);
+                        var indicatorProperty = (Motor)c;
+                        //indicatorProperty.LinkedObject.GetComponent<Motor>().Damage(100);
+                        indicatorProperty.Damage(100);
+                        print($"Damage 100");
                             break;
                     }
                 }

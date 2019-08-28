@@ -23,6 +23,8 @@ public class ObjectManager : MonoBehaviour
     private float spawnDistance;
     [SerializeField]
     private float aproximateTimeToPlayer;
+    [SerializeField]
+    private float minerals;
 
 
 
@@ -59,9 +61,17 @@ public class ObjectManager : MonoBehaviour
             spaceObject.GetComponent<Rigidbody>().mass = mass;
             spaceObject.GetComponent<Rigidbody>().AddForce(randomPosition.normalized*-1*mass*spawnDistance/aproximateTimeToPlayer);
 
+            spaceObject.GetComponent<Motor>().Hit = mass;
+            spaceObject.GetComponent<Motor>().Health = mass;
+            spaceObject.GetComponent<Motor>().Destroed += AddMinerals;
+
             yield return new WaitForSeconds(SpawnFrequency);
         }
 
+    }
+    private void AddMinerals(object sender, DestroyedEventArgs args)
+    {
+        minerals += args.HitPoints;
     }
 
     private float MassGenerator()
